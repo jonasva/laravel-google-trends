@@ -1,0 +1,22 @@
+{
+    "name": "jonasva/laravel-google-trends",
+    "description": "Google trends unofficial api for laravel",
+    "keywords": ["google", "trends", "laravel", "api"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jonas Van Assche",
+            "email": "jonas.vanassche@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "~4.0",
+        "jonasva/google-trends": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "Jonasva\\LaravelGoogleTrends": "src/"
+        } 
+    }
+}
