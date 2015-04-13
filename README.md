@@ -56,4 +56,65 @@ The Google session you receive after authenticating can be cached as well (which
 
 ## Usage
 
-Coming soon
+You can perform any kind of trends query by using this function:
+```php
+    /*
+     * Perform a google trends request
+     *
+     * @param array $parameters
+     * @return \Jonasva\GoogleTrends\GoogleTrendsResponse
+     */
+    public function performRequest(array $parameters)
+```
+
+The `$parameters` parameter contains the query conditions.
+
+Example:
+```php
+    // add search terms (optional for topQueries cid)
+    $parameters['terms'] = ['term1', 'term2', 'term3'];
+
+    // set a date range (optional)
+    $parameters['dateRange']['start'] = (new \DateTime('2015-01-01'))->format('Y-m-d');
+    $parameters['dateRange']['end'] = (new \DateTime())->format('Y-m-d');
+
+    // set a location (optional)
+    $parameters['location'] = 'BE';
+
+    // set a category id (optional)
+    $parameters['category'] = '0-3';
+
+    // set a cid, there are 3 options:
+    $parameters['cid'] = 'graph'; // to return time graph data points and labels
+    $parameters['cid'] = 'topQueries'; // to return the top queries
+    $parameters['cid'] = 'risingQueries'; // to return rising queries
+
+    $response = LaravelGoogleTrends::performRequest($parameters);
+```
+
+You can then format the response to a more usable data format:
+```php
+    // to get an array of GoogleTrendsTerm objects
+    $response->getTermsObjects();
+
+    // to get formatted data suitable for creating a line chart
+    // can only be used with $parameters['cid'] = 'graph'
+    $response->getFormattedData();
+```
+
+## Methods
+
+Get labels and data points for a graph of 1 or more terms for a given period
+```php
+    /*
+     * Get labels and data points for a graph of 1 or more terms for a given period
+     *
+     * @param \DateTime $startDate
+     * @param \DateTime $endDate
+     * @param array $terms
+     * @param string $location (optional)
+     * @param bool $fillEmpties (optional - if true, an array of zeros will be added for terms with no results)
+     * @return array
+     */
+    public function getTermsGraphForPeriod(\DateTime $startDate, \DateTime $endDate, array $terms, $location = null, $fillEmpties = true)
+```
